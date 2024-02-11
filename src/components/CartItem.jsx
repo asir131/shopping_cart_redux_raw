@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-
+import { modifyQuantityOfAnItem,removeFromCart } from "../store/actions/cart";
 import { icons } from "../assets";
 
 const CartItem = ({ cartItem }) => {
@@ -30,13 +30,19 @@ const CartItem = ({ cartItem }) => {
                                 
 								(currentQuantity) => currentQuantity - 1,
 							);
-							dispatch({
-								type: "cart/modifyQuantityOfAnItem",
-								payload: {
-									id: cartItem.id,
-									quantity: itemQuantity - 1,
-								},
-							});
+							dispatch(
+							// 	{
+							// 	type: "cart/modifyQuantityOfAnItem",
+							// 	payload: {
+							// 		id: cartItem.id,
+							// 		quantity: itemQuantity - 1,
+							// 	},
+							// }
+							modifyQuantityOfAnItem({
+								id: cartItem.id,
+							 	quantity: itemQuantity - 1
+							})
+							);
 						}}
 					>
 						<figure>
@@ -49,13 +55,16 @@ const CartItem = ({ cartItem }) => {
 						value={itemQuantity}
 						onChange={(e) => {
 							setItemQuantity(Number(e.target.value));
-							dispatch({
-								type: "cart/modifyQuantityOfAnItem",
-								payload: {
-									id: cartItem.id,
-									quantity: Number(e.target.value),
-								},
-							});
+							dispatch(
+							// 	{
+							// 	type: "cart/modifyQuantityOfAnItem",
+							// 	payload: {
+							// 		id: cartItem.id,
+							// 		quantity: Number(e.target.value),
+							// 	},
+							// }
+							modifyQuantityOfAnItem({id: cartItem.id, quantity: Number(e.target.value)})
+							);
 						}}
 						min="1"
 					/>
@@ -64,13 +73,19 @@ const CartItem = ({ cartItem }) => {
 							setItemQuantity(
 								(currentQuantity) => currentQuantity + 1,
 							);
-							dispatch({
-								type: "cart/modifyQuantityOfAnItem",
-								payload: {
-									id: cartItem.id,
-									quantity: itemQuantity + 1,
-								},
-							});
+							dispatch(
+							// 	{
+							// 	type: "cart/modifyQuantityOfAnItem",
+							// 	payload: {
+							// 		id: cartItem.id,
+							// 		quantity: itemQuantity + 1,
+							// 	},
+							// }
+							modifyQuantityOfAnItem({
+								id: cartItem.id,
+								quantity: itemQuantity + 1,
+							})
+							);
 						}}
 						className="qty-count qty-count--add"
 						type="button"
@@ -88,10 +103,13 @@ const CartItem = ({ cartItem }) => {
 					alt=""
 					className="cross-icon"
 					onClick={() =>
-						dispatch({
-							type: "cart/removeFromCart",
-							payload: cartItem.id,
-						})
+						dispatch(
+						// 	{
+						// 	type: "cart/removeFromCart",
+						// 	payload: cartItem.id,
+						// }
+						removeFromCart(cartItem.id)
+						)
 					}
 				/>
 			</td>
